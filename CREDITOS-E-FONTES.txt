@@ -1,0 +1,7 @@
+Imagens de Apple Newsroom (URLs externas no HTML): Apple Inc.
+Vídeos de Apple Brasil (YouTube, sem download): Apple Inc.
+Conteúdo sobre as gerações de iPhone: Apple Brasil / Apple Support.
+Animações e visualizações ilustrativas de cores: implementação original para iUP Concept.
+Marca, fotos de loja, telefone, endereço: arquivos do ZIP original fornecido pelo usuário.
+Cores estimadas em RGB para aproximação visual; valores não são especificação oficial da Apple.
+Em caso de uso comercial, confirme as permissões de uso e substitua mídia por recursos licenciados se exigido.
