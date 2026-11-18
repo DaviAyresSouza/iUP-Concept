@@ -20,12 +20,63 @@ const details={iphone16:{name:'iPhone 16',image:'assets/iphone16.jpg',descriptio
 $$('[data-modal]').forEach(b=>b.addEventListener('click',()=>showDetail(details[b.dataset.modal],b)));$('#zoom-model').onclick=e=>{const m=models[modelKey],c=m.colors[colorIndex];showDetail({name:m.name+' · '+c[0],image:'assets/apple/'+c[2],description:m.description,dark:m.dark},e.currentTarget)};$('.dialog-close').onclick=()=>dialog.close();dialog.addEventListener('click',e=>{if(e.target!==dialog)return;const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()});dialog.addEventListener('close',()=>{document.body.style.overflow='';dialogTrigger?.focus({preventScroll:true})});
 const gallery=$('#detail-gallery'),prev=$('[data-gallery-dir="-1"]'),next=$('[data-gallery-dir="1"]');function updateGallery(){$('.gallery-controls').hidden=gallery.scrollWidth<=gallery.clientWidth+3;prev.disabled=gallery.scrollLeft<=3;next.disabled=gallery.scrollLeft+gallery.clientWidth>=gallery.scrollWidth-3}$$('[data-gallery-dir]').forEach(b=>b.onclick=()=>gallery.scrollBy({left:Number(b.dataset.galleryDir)*(gallery.querySelector('article').offsetWidth+24),behavior:motion.matches?'instant':'smooth'}));gallery.addEventListener('scroll',updateGallery,{passive:true});addEventListener('resize',updateGallery);updateGallery();
 function loadFilm(video){const source=video.querySelector('source');if(source?.dataset.src){source.src=source.dataset.src;delete source.dataset.src;video.load()}}
-const hero=$('#hero-video'),heroControl=$('[data-video="hero-video"]');let heroVisible=false,userPaused=false;
-function syncHeroControl(){heroControl.setAttribute('aria-label',hero.paused?'Reproduzir animação do iPhone 18 Pro':'Pausar animação do iPhone 18 Pro');heroControl.setAttribute('aria-pressed',String(!hero.paused));heroControl.querySelector('.control-icon').innerHTML=hero.paused?'<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 2l10 6-10 6z"/></svg>':'<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M3 2h3v12H3zm7 0h3v12h-3z"/></svg>';heroControl.querySelector('.control-text').textContent=hero.paused?'Reproduzir animação':'Pausar animação'}
-hero.addEventListener('play',syncHeroControl);hero.addEventListener('pause',syncHeroControl);heroControl.onclick=()=>{if(hero.paused){userPaused=false;loadFilm(hero);hero.play().catch(()=>syncHeroControl())}else{userPaused=true;hero.pause()}};
+const hero = $('#hero-video');
+let heroVisible = !('IntersectionObserver' in window);
+
+function syncHeroPlayback() {
+  if (!heroVisible || document.hidden || motion.matches || saveData) {
+    hero.pause();
+    return;
+  }
+
+  loadFilm(hero);
+  hero.play().catch(() => {
+    // The poster stays visible if the browser blocks autoplay.
+  });
+}
+
 const duo=$('#duo-video'),story=$('.duo-story'),duoReplay=$('#duo-replay');let storyVisible=false,manualDuo=false,ticking=false;
 function updateScroll(){ticking=false;if(motion.matches)return;const heroRect=$('.hero').getBoundingClientRect();if(heroRect.bottom>0&&heroRect.top<innerHeight){const p=Math.max(0,Math.min(1,-heroRect.top/heroRect.height));$('.hero-image').style.transform=`translateX(-50%) translateY(${p*30}px) scale(${1+p*.055})`}
  if(storyVisible){const r=story.getBoundingClientRect(),distance=story.offsetHeight-$('.duo-sticky').offsetHeight,p=Math.max(0,Math.min(1,((parseFloat(getComputedStyle($('.duo-sticky')).top)||0)-r.top)/Math.max(distance,1)));story.style.setProperty('--story-progress',p.toFixed(4));if(!saveData&&!manualDuo&&duo.readyState>=1&&Number.isFinite(duo.duration)&&!duo.seeking){const t=Math.min(duo.duration-.04,duo.duration*p);if(Math.abs(duo.currentTime-t)>.045)duo.currentTime=Math.max(0,t)}}}
 function schedule(){if(!ticking){ticking=true;requestAnimationFrame(updateScroll)}}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);duo.addEventListener('loadedmetadata',schedule);duo.addEventListener('seeked',()=>{if(storyVisible&&!manualDuo)schedule()});duoReplay.onclick=()=>{loadFilm(duo);if(manualDuo&&!duo.paused){duo.pause();manualDuo=false;duoReplay.textContent='Reproduzir apresentação ↗';schedule()}else{manualDuo=true;duo.currentTime=0;duo.play().then(()=>{duoReplay.textContent='Pausar apresentação Ⅱ'}).catch(()=>{manualDuo=false;duoReplay.textContent='Reproduzir apresentação ↗'})}};duo.addEventListener('ended',()=>{manualDuo=false;duoReplay.textContent='Reproduzir apresentação ↗'});
-function syncMotion(){document.documentElement.classList.toggle('reduced',motion.matches);if(motion.matches){hero.pause();duo.pause();manualDuo=false;$('.hero-image').style.transform='translateX(-50%)';duoReplay.textContent='Reproduzir apresentação ↗'}else if(heroVisible&&!userPaused&&!saveData){loadFilm(hero);hero.play().catch(()=>{})}schedule()}motion.addEventListener('change',syncMotion);
-if('IntersectionObserver' in window){const films=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.target===hero){heroVisible=e.isIntersecting;if(heroVisible&&!motion.matches&&!saveData&&!userPaused){loadFilm(hero);hero.play().catch(()=>{})}else hero.pause()}else{storyVisible=e.isIntersecting;if(storyVisible&&!motion.matches&&!saveData){loadFilm(duo);schedule()}else if(!storyVisible){duo.pause();manualDuo=false;duoReplay.textContent='Reproduzir apresentação ↗'}}}),{threshold:.05});films.observe(hero);films.observe(story)}syncMotion();document.addEventListener('visibilitychange',()=>{if(document.hidden){hero.pause();duo.pause()}else if(heroVisible&&!motion.matches&&!saveData&&!userPaused)hero.play().catch(()=>{})});
+function syncMotion() {
+  document.documentElement.classList.toggle('reduced', motion.matches);
+  if (motion.matches) {
+    duo.pause();
+    manualDuo = false;
+    $('.hero-image').style.transform = 'translateX(-50%)';
+    duoReplay.textContent = 'Reproduzir apresentação ↗';
+  }
+  syncHeroPlayback();
+  schedule();
+}
+
+motion.addEventListener('change', syncMotion);
+if ('IntersectionObserver' in window) {
+  const films = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.target === hero) {
+        heroVisible = entry.isIntersecting;
+        syncHeroPlayback();
+        continue;
+      }
+      storyVisible = entry.isIntersecting;
+      if (storyVisible && !motion.matches && !saveData) {
+        loadFilm(duo);
+        schedule();
+      } else if (!storyVisible) {
+        duo.pause();
+        manualDuo = false;
+        duoReplay.textContent = 'Reproduzir apresentação ↗';
+      }
+    }
+  }, { threshold: .05 });
+  films.observe(hero);
+  films.observe(story);
+}
+
+syncMotion();
+document.addEventListener('visibilitychange', () => {
+  syncHeroPlayback();
+  if (document.hidden) duo.pause();
+});
