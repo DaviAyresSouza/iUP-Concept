@@ -16,3 +16,92 @@
     mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 78%, transparent);
   }
 }
+
+/* The logo file has its own transparent padding. Keep the full artwork visible. */
+.logo {
+  width: 164px;
+  height: auto;
+  overflow: visible;
+}
+.logo img {
+  position: static;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Blend the picture on all four edges, including during the wide lens close-up. */
+.hero-image.cinematic {
+  width: min(1600px, 108vw);
+}
+.hero-image.cinematic::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, #000 0%, transparent 16%, transparent 84%, #000 100%);
+  pointer-events: none;
+}
+.seminovos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+.seminovo-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 26px;
+  background: #f5f5f7;
+}
+.seminovo-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  border-radius: 19px;
+}
+.seminovo-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px 9px 10px;
+}
+.seminovo-ref {
+  color: #a43600;
+  font-size: 12px;
+  font-weight: 700;
+}
+.seminovo-copy h3 {
+  margin: 8px 0 5px;
+  font-size: clamp(22px, 2.1vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -.035em;
+}
+.seminovo-copy p {
+  margin: 0 0 18px;
+  color: #59595f;
+  font-size: 14px;
+}
+.seminovo-copy .btn {
+  margin-top: auto;
+  font-size: 13px;
+}
+@media (max-width: 800px) {
+  .logo { width: 146px; }
+  .hero-image.cinematic { width: 112vw; }
+  .hero-image.cinematic::after {
+    background: linear-gradient(90deg, #000 0%, transparent 22%, transparent 78%, #000 100%);
+  }
+  .seminovos-grid {
+    grid-template-columns: repeat(3, minmax(240px, 78%));
+    gap: 14px;
+    margin-inline: -24px;
+    padding: 0 24px 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 24px;
+  }
+  .seminovo-card { scroll-snap-align: start; }
+}
