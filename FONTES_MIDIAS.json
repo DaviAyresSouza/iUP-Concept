@@ -1,0 +1,122 @@
+[
+  {
+    "file": "assets/apple/pro-intro.mp4",
+    "url": "https://www.apple.com/105/media/us/iphone-18-pro/2026/591df885-5ee2-4173-86e6-401021249f7c/anim/hero/large.mp4",
+    "bytes": 1948463,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/pro-poster.jpg",
+    "url": "https://www.apple.com/v/iphone-18-pro/a/images/overview/media-hero/hero_endframe__fbxsnz8txcia_large.jpg",
+    "bytes": 44750,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/pro-burgundy.jpg",
+    "url": "https://www.apple.com/v/iphone-18-pro/a/images/overview/product-viewer/color_burgundy__f95it7a6dnyq_large.jpg",
+    "bytes": 85763,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/pro-glacier.jpg",
+    "url": "https://www.apple.com/v/iphone-18-pro/a/images/overview/product-viewer/color_glacier__fkxlpbz0ruy6_large.jpg",
+    "bytes": 99542,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/pro-silver.jpg",
+    "url": "https://www.apple.com/v/iphone-18-pro/a/images/overview/product-viewer/color_silver__c0oudn0fzw4m_large.jpg",
+    "bytes": 91542,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/pro-black.jpg",
+    "url": "https://www.apple.com/v/iphone-18-pro/a/images/overview/product-viewer/color_black__dseo2tvypuc2_large.jpg",
+    "bytes": 63020,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/duo-intro.mp4",
+    "url": "https://www.apple.com/105/media/ww/iphone-duo/2026/9305e4b9-72d9-4c05-9381-b572adadd5e5/anim/hero/large.mp4",
+    "bytes": 692072,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/duo-poster.jpg",
+    "url": "https://www.apple.com/br/iphone-duo/images/overview/media-hero/hero_endframe__gdt3l3spaqie_large.jpg",
+    "bytes": 165296,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/duo-design.jpg",
+    "url": "https://www.apple.com/br/iphone-duo/images/overview/design/design_hero__gczn1e74mwa6_large.jpg",
+    "bytes": 220676,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/17-lavender.jpg",
+    "url": "https://www.apple.com/v/iphone-17/i/images/overview/product-viewer/colors_lavender__bcaie9a8npj6_large.jpg",
+    "bytes": 62270,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/17-sage.jpg",
+    "url": "https://www.apple.com/v/iphone-17/i/images/overview/product-viewer/colors_sage__cr1jt90v1yoi_large.jpg",
+    "bytes": 71710,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/17-blue.jpg",
+    "url": "https://www.apple.com/v/iphone-17/i/images/overview/product-viewer/colors_mist_blue__700uff6zu2qa_large.jpg",
+    "bytes": 74050,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/17-white.jpg",
+    "url": "https://www.apple.com/v/iphone-17/i/images/overview/product-viewer/colors_white__979ypubjzdum_large.jpg",
+    "bytes": 51812,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/17-black.jpg",
+    "url": "https://www.apple.com/v/iphone-17/i/images/overview/product-viewer/colors_black__fzuhc3kqvmq2_large.jpg",
+    "bytes": 89389,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/air-blue.jpg",
+    "url": "https://www.apple.com/v/iphone-air/i/images/overview/product-viewer/color_static_ultramarine__cgfuoct82biu_large.jpg",
+    "bytes": 55004,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/air-gold.jpg",
+    "url": "https://www.apple.com/v/iphone-air/i/images/overview/product-viewer/color_static_gold__d1p7qgdkczo2_large.jpg",
+    "bytes": 51814,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/air-white.jpg",
+    "url": "https://www.apple.com/v/iphone-air/i/images/overview/product-viewer/color_static_white__bsqapwl67oj6_large.jpg",
+    "bytes": 42304,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/air-black.jpg",
+    "url": "https://www.apple.com/v/iphone-air/i/images/overview/product-viewer/color_static_black__bavqefsedg82_large.jpg",
+    "bytes": 54432,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/air-design.jpg",
+    "url": "https://www.apple.com/v/iphone-air/i/images/overview/design/hero_design__capuizdf0uuu_large.jpg",
+    "bytes": 88974,
+    "status": "ok"
+  },
+  {
+    "file": "assets/apple/17-camera.png",
+    "url": "https://www.apple.com/v/iphone-17/i/images/overview/cameras/back-camera/hero_rear_camera__baka63bo73ma_large.png",
+    "bytes": 1140266,
+    "status": "ok"
+  }
+]
