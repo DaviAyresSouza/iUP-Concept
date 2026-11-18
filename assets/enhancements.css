@@ -105,3 +105,119 @@
   }
   .seminovo-card { scroll-snap-align: start; }
 }
+
+/* Keep the still image in place until playback delivers its first frame. */
+.hero-image.cinematic { background: #000 url("hero.jpg") center / cover no-repeat; }
+.hero-image.cinematic video {
+  opacity: 0;
+  transition: opacity .75s var(--ease);
+}
+.hero-image.cinematic video.hero-frame-ready { opacity: 1; }
+
+.detail-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  scroll-snap-type: none;
+}
+.detail-card { min-width: 0; height: clamp(360px, 36vw, 480px); }
+.detail-card button { width: 44px; height: 44px; }
+.category-card img { object-fit: contain; object-position: center; padding: 150px 20px 45px; }
+.category-card.detail-card-dark img { object-fit: cover; padding: 135px 0 0; object-position: 62% center; }
+
+.brand-stage {
+  min-height: clamp(175px, 23vw, 285px);
+  width: min(100%, 370px);
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  perspective: 760px;
+}
+.brand-float, .brand-spin { transform-style: preserve-3d; }
+.brand-float {
+  width: min(85%, 265px);
+  animation: brand-hover 4s ease-in-out infinite;
+}
+.brand-spin {
+  position: relative;
+  aspect-ratio: 307 / 156;
+  animation: brand-rotate 7s ease-in-out infinite;
+}
+.brand-face, .brand-depth { position: absolute; inset: 0; }
+.brand-face { filter: drop-shadow(0 2px 1px #3b100852); }
+.brand-depth { transform: translateZ(var(--depth)); }
+.brand-depth path { fill: #75260b; }
+.brand-depth path[fill="#fff"] { fill: #85544a; }
+.brand-spin svg { display: block; width: 100%; height: 100%; }
+@keyframes brand-hover {
+  0%, 100% { transform: translateY(4px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes brand-rotate {
+  0%, 100% { transform: rotateX(7deg) rotateY(-25deg) rotateZ(-3deg); }
+  50% { transform: rotateX(-5deg) rotateY(25deg) rotateZ(3deg); }
+}
+
+@media (max-width: 1050px) {
+  .detail-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  html { scroll-behavior: auto; scroll-padding-top: 74px; }
+  .nav { padding-inline: clamp(16px, 4vw, 25px); }
+  .menu { min-width: 44px; min-height: 44px; }
+  .links.open { max-height: calc(100dvh - 62px); overflow-y: auto; gap: 12px; }
+  .links.open > a { min-height: 44px; display: flex; align-items: center; }
+  .hero { min-height: 0; height: auto; max-height: none; padding-top: clamp(86px, 16vw, 124px); }
+  .hero h1 { font-size: clamp(39px, 9vw, 70px); letter-spacing: -.045em; padding-inline: 14px; }
+  .hero .sub { margin: 17px auto 20px; padding-inline: 12px; }
+  .hero .actions { gap: 12px; flex-wrap: wrap; padding-inline: 15px; }
+  .hero-image.cinematic {
+    position: relative;
+    bottom: auto;
+    height: clamp(240px, 65vw, 400px);
+    margin-top: -16px;
+    will-change: auto;
+  }
+  .intro-strip { padding: 12px 16px; }
+  .intro-strip a { display: inline-grid; place-items: center; min-height: 44px; }
+  .seminovos-grid {
+    grid-template-columns: 1fr;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+  .seminovo-card img { max-height: 385px; }
+  .detail-card { height: clamp(330px, 78vw, 410px); }
+  .duo-story, .reduced .duo-story { height: auto; min-height: 0; }
+  .duo-story .duo-sticky {
+    position: static;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: 40px 20px;
+    gap: 20px;
+  }
+  .duo-cinema { width: 100%; transform: none; will-change: auto; }
+  .duo-cinema video { height: auto; max-height: 350px; aspect-ratio: 4 / 3; }
+  .duo-story .story-progress { display: none; }
+  .duo-replay { min-height: 44px; }
+  .model-visual { height: clamp(270px, 58vw, 360px); }
+  .swatches { gap: 12px; }
+  .swatch { min-width: 30px; min-height: 30px; }
+  .statement { min-height: 0; text-align: center; }
+  .statement h2 { font-size: clamp(40px, 10vw, 64px); margin-inline: auto; }
+  .brand-stage { margin: 12px auto 0; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .floating { bottom: max(16px, env(safe-area-inset-bottom)); }
+}
+@media (max-width: 560px) {
+  .detail-gallery { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-float, .brand-spin { animation: none; }
+  .hero-image.cinematic video { transition: none; }
+}
