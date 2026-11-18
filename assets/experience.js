@@ -24,7 +24,8 @@ const hero = $('#hero-video');
 let heroVisible = !('IntersectionObserver' in window);
 
 function syncHeroPlayback() {
-  if (!heroVisible || document.hidden || motion.matches || saveData) {
+  if (!heroVisible || document.hidden || motion.matches || saveData ||
+      document.documentElement.classList.contains('intro-playing')) {
     hero.pause();
     return;
   }
@@ -80,3 +81,5 @@ document.addEventListener('visibilitychange', () => {
   syncHeroPlayback();
   if (document.hidden) duo.pause();
 });
+
+window.addEventListener('iup:intro-ended', syncHeroPlayback);
