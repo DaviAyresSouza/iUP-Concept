@@ -120,3 +120,70 @@ document.addEventListener('visibilitychange', () => {
 });
 
 window.addEventListener('iup:intro-ended', syncHeroPlayback);
+
+const productCarousel = $('.product-carousel');
+const productCards = $$('.product-carousel .detail-card');
+const productDots = $$('[data-product-slide]');
+const productArrows = $('.product-arrows');
+const productStatus = $('.product-status');
+let activeProduct = 0;
+
+function resetProductTilt(card) {
+  card.removeAttribute('data-tilting');
+  card.style.removeProperty('--tilt-x');
+  card.style.removeProperty('--tilt-y');
+}
+
+function showProduct(index, announce = true) {
+  const count = productCards.length;
+  activeProduct = (index + count) % count;
+  productCards.forEach((card, position) => {
+    const relative = (position - activeProduct + count) % count;
+    const active = relative === 0;
+    card.dataset.position = active ? 'active' : relative === 1 ? 'next' : relative === count - 1 ? 'previous' : 'hidden';
+    card.inert = !active;
+    card.setAttribute('aria-hidden', String(!active));
+    if (active) productDots[position].setAttribute('aria-current', 'true');
+    else productDots[position].removeAttribute('aria-current');
+    resetProductTilt(card);
+  });
+  if (announce) {
+    const name = productCards[activeProduct].querySelector('.eyebrow').textContent;
+    productStatus.textContent = `${activeProduct + 1} de ${count}. ${name}.`;
+  }
+}
+
+showProduct(0, false);
+productCarousel.dataset.ready = '';
+productArrows.hidden = false;
+$('.product-pagination').hidden = false;
+$$('[data-product-step]').forEach(button => {
+  button.addEventListener('click', () => showProduct(activeProduct + Number(button.dataset.productStep)));
+});
+productDots.forEach(button => {
+  button.addEventListener('click', () => showProduct(Number(button.dataset.productSlide)));
+});
+productCarousel.addEventListener('keydown', event => {
+  const step = {ArrowLeft: -1, ArrowRight: 1}[event.key];
+  if (!step || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+  event.preventDefault();
+  if (productCards[activeProduct].contains(event.target)) {
+    productArrows.querySelector(`[data-product-step="${step}"]`).focus({preventScroll: true});
+  }
+  showProduct(activeProduct + step);
+});
+
+const precisePointer = matchMedia('(hover: hover) and (pointer: fine)');
+productCards.forEach(card => {
+  card.addEventListener('pointermove', event => {
+    if (motion.matches || !precisePointer.matches || event.pointerType !== 'mouse' ||
+        card.dataset.position !== 'active') return;
+    const bounds = card.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+    card.setAttribute('data-tilting', '');
+    card.style.setProperty('--tilt-x', `${(.5 - y) * 6}deg`);
+    card.style.setProperty('--tilt-y', `${(x - .5) * 8}deg`);
+  });
+  card.addEventListener('pointerleave', () => resetProductTilt(card));
+});

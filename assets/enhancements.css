@@ -221,3 +221,104 @@
   .brand-float, .brand-spin { animation: none; }
   .hero-image.cinematic video { transition: none; }
 }
+
+/* Match the Nucom card motion while using the iUP palette. */
+.product-carousel[data-ready] {
+  --card-width: min(68%, 414px);
+  --stack-travel: clamp(90px, 17vw, 188px);
+}
+.product-stage { position: relative; touch-action: pan-y; }
+.product-carousel[data-ready] .detail-gallery {
+  grid-template-columns: minmax(0, var(--card-width));
+  justify-content: center;
+  gap: 0;
+  perspective: 1120px;
+}
+.product-carousel[data-ready] .detail-card {
+  grid-area: 1 / 1;
+  height: clamp(360px, 43vw, 465px);
+  opacity: 0;
+  z-index: 0;
+  transform: scale(.78);
+  pointer-events: none;
+  transition: transform .65s var(--ease), opacity .52s, filter .52s;
+}
+.product-carousel[data-ready] .detail-card:is([data-position="previous"], [data-position="next"]) {
+  z-index: 1;
+  opacity: .48;
+  filter: blur(3.2px) brightness(.75);
+}
+.product-carousel[data-ready] .detail-card[data-position="previous"] {
+  transform: translateX(calc(-1 * var(--stack-travel))) scale(.87) rotateY(10deg);
+}
+.product-carousel[data-ready] .detail-card[data-position="next"] {
+  transform: translateX(var(--stack-travel)) scale(.87) rotateY(-10deg);
+}
+.product-carousel[data-ready] .detail-card[data-position="active"] {
+  z-index: 2;
+  opacity: 1;
+  pointer-events: auto;
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  box-shadow: 0 15px 42px #17171920;
+}
+.product-carousel[data-ready] .detail-card[data-tilting] { transition-duration: .28s, .52s, .52s; }
+.product-arrows {
+  position: absolute;
+  z-index: 3;
+  top: calc(50% - 22px);
+  inset-inline: max(0px, calc((100% - var(--card-width)) / 2 - 22px));
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.product-arrows button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0 0 2px;
+  border: 1px solid #e6e3e0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 14px #17171922;
+  color: #171719;
+  font-size: 27px;
+  pointer-events: auto;
+}
+.product-pagination { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.product-pagination button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+}
+.product-pagination span { width: 23px; height: 3px; border-radius: 3px; background: #a4a4ab; }
+.product-pagination [aria-current="true"] span { background: var(--orange); }
+.product-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.brand-depth path[fill="#090909"] { fill: #190d09; }
+.experience-faq { align-items: start; }
+.faq-intro { color: #59595f; line-height: 1.6; margin-top: 16px; }
+.faq-questions a { color: #a43600; text-decoration: underline; text-underline-offset: 3px; }
+.faq-questions summary { align-items: center; }
+@media (max-width: 800px) {
+  .product-carousel[data-ready] { --card-width: min(86%, 414px); --stack-travel: clamp(23px, 11vw, 76px); }
+  .product-carousel[data-ready] .detail-card { height: clamp(337px, 98vw, 430px); }
+  .faq-questions details { padding-block: 19px; }
+}
+@media (hover: none) {
+  .product-carousel .detail-card:hover img { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-carousel[data-ready] .detail-card { transition: none; }
+}
